@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Film Manager</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Film Manager built with Node.js, React.js, PostgreSQL.">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    {{#each cssFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
+</head>
+<body>
+    <div id="app"></div>
+
+    <div id="loader" class="ui active dimmer">
+        <div class="ui large text loader">
+            <div class="ui inverted teal header">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    {{#each jsFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
+</body>
+</html>

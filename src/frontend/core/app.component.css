@@ -1,0 +1,29 @@
+#app {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.footer.segment {
+    padding: 3em 0;
+}
+
+.field-validation-error {
+    color: #d0021b;
+}
+
+a[disabled] {
+    pointer-events: none;
+}
+
+#loader {
+    display: none;
+}
+
+.ui.form .disabled.fields .field, .ui.form .disabled.field, .ui.form .field :disabled {
+    opacity: 0.9;
+}
+
+.site-content {
+    flex: 1;
+}
