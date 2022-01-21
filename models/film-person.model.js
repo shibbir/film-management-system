@@ -6,8 +6,8 @@ const Film = require("./film.model");
 const Person = sequelize.dbConnector.define("film_persons", {
     id: {
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
+        autoIncrement: true,
+        type: DataTypes.INTEGER
     },
     name: {
         unique: true,

@@ -3,10 +3,9 @@ const path = require("path");
 const glob = require("glob");
 const express = require("express");
 const hbs = require("express-hbs");
-const cookieParser = require("cookie-parser");
 
-const defaultAssets = require(path.join(process.cwd(), "src/backend/config/assets/default"));
-const environmentAssets = process.env.NODE_ENV === "production" ? require(path.join(process.cwd(), "src/backend/config/assets/production")) : {};
+const defaultAssets = require(path.join(process.cwd(), "src/config/assets/default"));
+const environmentAssets = process.env.NODE_ENV === "production" ? require(path.join(process.cwd(), "src/config/assets/production")) : {};
 const assets = _.merge(defaultAssets, environmentAssets);
 
 module.exports = function() {
@@ -14,7 +13,6 @@ module.exports = function() {
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-    app.use(cookieParser(process.env.COOKIE_SECRET));
     app.use(express.static(path.join(process.cwd(), "wwwroot")));
 
     app.engine("html", hbs.express4({ extname: ".html" }));
@@ -26,7 +24,10 @@ module.exports = function() {
     app.locals.jsFiles = glob.sync(assets.frontend.js).map(filePath => filePath.replace("wwwroot/", ""));
     app.locals.cssFiles = glob.sync(assets.frontend.css).map(filePath => filePath.replace("wwwroot/", ""));
 
-    app.get("/", (req, res) => {
+    require("../film-person/film-person.server.routes")(app);
+
+    app.get("*", (req, res) => {
+        if(req.xhr) return res.status(404).send("The resource you are looking for is not exists.");
         res.render("index");
     });
 

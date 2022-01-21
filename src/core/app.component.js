@@ -1,27 +1,16 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import "fomantic-ui-css/semantic.css";
 import "izitoast/dist/css/iziToast.css";
 import "./app.component.css";
 
-import Forbidden from "./components/forbidden.component";
 import NoMatch from "./components/nomatch-route.component";
-import PublicRoute from "./components/public-route.component";
-import PrivateRoute from "./components/private-route.component";
-import Login from "../manage-users/components/login.component";
-import Profile from "../manage-users/components/profile.component";
-import Dashboard from "../manage-users/components/dashboard.component";
+import RouteContainer from "./components/route-container.component";
+import Dashboard from "./components/dashboard.component";
 
-import ClassRoutes from "../manage-classes/class.routes";
-import SubjectRoutes from "../manage-subjects/subject.routes";
-import AdminRoutes from "../manage-users/admin/admin.routes";
-import PupilRoutes from "../manage-users/pupil/pupil.routes";
-import TeacherRoutes from "../manage-users/teacher/teacher.routes";
-
-import { getSignedInUserProfile } from "../manage-users/user.actions";
+import FilmPersonRoutes from "../film-person/film-person.client.routes";
 
 let refCount = 0;
 
@@ -53,31 +42,11 @@ axios.interceptors.response.use(response => {
 });
 
 export default function App() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getSignedInUserProfile());
-    }, [dispatch]);
-
     return (
         <Switch>
-            <PublicRoute path="/login" component={Login}/>
+            <RouteContainer exact path="/" component={Dashboard}/>
 
-            <PrivateRoute exact path="/" component={Dashboard}/>
-
-            <PrivateRoute path="/profile" component={Profile}/>
-
-            <Route path="/manage-users" component={AdminRoutes}/>
-
-            <Route path="/manage-classes" component={ClassRoutes}/>
-
-            <Route path="/manage-subjects" component={SubjectRoutes}/>
-
-            <Route path="/assigned-subjects" component={TeacherRoutes}/>
-
-            <Route path="/pupil" component={PupilRoutes}/>
-
-            <Route path="/forbidden" component={Forbidden}/>
+            <Route path="/film-persons" component={FilmPersonRoutes}/>
 
             <Route component={NoMatch}/>
         </Switch>

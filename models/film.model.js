@@ -5,13 +5,13 @@ const sequelize = require("../src/config/sequelize");
 const Film = sequelize.dbConnector.define("films", {
     id: {
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
+        autoIncrement: true,
+        type: DataTypes.INTEGER
     },
     title: {
         unique: true,
         allowNull: false,
-        type: DataTypes.STRING(25)
+        type: DataTypes.STRING(30)
     },
     release_year: {
         allowNull: false,
@@ -23,8 +23,8 @@ const Film = sequelize.dbConnector.define("films", {
     production_country: {
         type: DataTypes.STRING(30)
     },
-    foreign_film_id: {
-        type: DataTypes.UUID
+    subordinated_to: {
+        type: DataTypes.INTEGER
     }
 }, {
     schema: process.env.POSTGRES_DATABASE_SCHEMA,
@@ -32,7 +32,7 @@ const Film = sequelize.dbConnector.define("films", {
     timestamps: false
 });
 
-Film.hasOne(Film, { as: 'child_film', foreignKey: 'foreign_film_id' });
-Film.belongsTo(Film, { as: 'parent_film', foreignKey: 'foreign_film_id' });
+Film.hasOne(Film, { as: 'child_film', foreignKey: 'subordinated_to' });
+Film.belongsTo(Film, { as: 'parent_film', foreignKey: 'subordinated_to' });
 
 module.exports = Film;

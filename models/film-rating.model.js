@@ -1,30 +1,18 @@
 const { DataTypes } = require("sequelize");
 
+const User = require("./user.model");
+const Film = require("./film.model");
 const sequelize = require("../src/config/sequelize");
 
 const FilmRating = sequelize.dbConnector.define("film_ratings", {
     id: {
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
-    },
-    title: {
-        unique: true,
-        allowNull: false,
-        type: DataTypes.STRING(25)
-    },
-    release_year: {
-        allowNull: false,
+        autoIncrement: true,
         type: DataTypes.INTEGER
     },
-    genres: {
-        type: DataTypes.ARRAY(DataTypes.STRING)
-    },
-    production_country: {
-        type: DataTypes.STRING(30)
-    },
-    foreign_film_id: {
-        type: DataTypes.UUID
+    rating: {
+        allowNull: false,
+        type: DataTypes.INTEGER
     }
 }, {
     schema: process.env.POSTGRES_DATABASE_SCHEMA,
@@ -32,7 +20,9 @@ const FilmRating = sequelize.dbConnector.define("film_ratings", {
     timestamps: false
 });
 
-Film.hasOne(Film, { as: 'child_film', foreignKey: 'foreign_film_id' });
-Film.belongsTo(Film, { as: 'parent_film', foreignKey: 'foreign_film_id' });
+User.hasMany(FilmRating, { as: 'flim_ratings', foreignKey: 'user_id' });
+FilmRating.belongsTo(User, { as: 'user', foreignKey: 'user_id', allowNull: false });
+
+FilmRating.belongsTo(Film, { as: 'film', foreignKey: 'film_id', allowNull: false });
 
 module.exports = FilmRating;
