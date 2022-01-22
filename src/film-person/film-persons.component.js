@@ -7,12 +7,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Divider, Segment, Button, Table, Modal, Header, Dropdown, Breadcrumb, List } from "semantic-ui-react";
 
-import SubjectForm from "./film-person-form.component";
+import PersonForm from "./film-person-form.component";
 import { getFilmPersons, deleteSubject, updateSubject } from "./film-person.client.actions";
 
 export default function SubjectList() {
     const dispatch = useDispatch();
-    const [subjectId, setSubjectId] = useState(undefined);
+    const [personId, setPersonId] = useState(undefined);
 
     useEffect(() => {
         dispatch(getFilmPersons());
@@ -42,7 +42,7 @@ export default function SubjectList() {
                 <Table.Cell>
                     <Dropdown>
                         <Dropdown.Menu>
-                            <Dropdown.Item icon="edit" text="Update Attributes" onClick={() => setSubjectId(row.id)}/>
+                            <Dropdown.Item icon="edit" text="Update Attributes" onClick={() => setPersonId(row.id)}/>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Table.Cell>
@@ -62,7 +62,7 @@ export default function SubjectList() {
                 primary
                 floated="right"
                 content="Add new film related person"
-                onClick={() => setSubjectId(null)}
+                onClick={() => setPersonId(null)}
             />
 
             <Divider hidden clearing/>
@@ -94,15 +94,15 @@ export default function SubjectList() {
                 </Segment>
             }
 
-            <Modal dimmer size="tiny" open={subjectId !== undefined}>
+            <Modal dimmer size="tiny" open={personId !== undefined}>
                 <Modal.Header>Subject Form</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
-                        <SubjectForm id={subjectId}/>
+                        <PersonForm id={personId}/>
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color="black" onClick={() => setSubjectId(undefined)}>
+                    <Button color="black" onClick={() => setPersonId(undefined)}>
                         Close
                     </Button>
                 </Modal.Actions>

@@ -22,12 +22,12 @@ export function createSubject(subject) {
     };
 }
 
-export function getSubject(id) {
+export function getFilmPerson(id) {
     return {
-        type: Types.GET_SUBJECT,
+        type: Types.GET_FILM_PERSON,
         payload: axios({
             method: "get",
-            url: `/api/subjects/${id}`
+            url: `/api/film-persons/${id}`
         })
     };
 }

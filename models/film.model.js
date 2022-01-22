@@ -11,7 +11,7 @@ const Film = sequelize.dbConnector.define("films", {
     title: {
         unique: true,
         allowNull: false,
-        type: DataTypes.STRING(30)
+        type: DataTypes.STRING(50)
     },
     release_year: {
         allowNull: false,

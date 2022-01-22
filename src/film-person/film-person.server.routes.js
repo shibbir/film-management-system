@@ -7,8 +7,8 @@ module.exports = function(app) {
         .get(controller.getFilmPersons)
         //.post(validateBody(registrationSchema), controller.createUser);
 
-    // app.route("/api/film-persons/:id")
-    //     .get(validateParams(idSchema), controller.getUser)
+    app.route("/api/film-persons/:id")
+        .get(controller.getFilmPerson)
     //     .patch(validateParams(idSchema), validateBody(updateSchema), controller.updateUser)
     //     .delete(validateParams(idSchema), controller.deleteUser);
 };

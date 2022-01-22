@@ -4,29 +4,28 @@ import iziToast from "izitoast/dist/js/iziToast";
 import { Divider, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { TextInput, DropdownInput } from "../core/components/field-inputs.component";
-import { createSubject, updateSubject, getSubject, resetSubject } from "./film-person.client.actions";
+import { TextInput } from "../core/components/field-inputs.component";
+import { createSubject, updateSubject, getFilmPerson, resetSubject } from "./film-person.client.actions";
 
-function SubjectForm({ id } = props) {
+function FilmPersonForm({ id } = props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
         if(id) {
-            dispatch(getSubject(id));
+            dispatch(getFilmPerson(id));
         } else {
             dispatch(resetSubject());
         }
     }, [id]);
 
-    const subject = useSelector(state => state.subjectReducer.subject);
+    const film_person = useSelector(state => state.filmPersonReducer.film_person);
 
     return (
         <Formik
             initialValues={{
-                name: subject ? subject.name : "",
-                teacher_id: subject ? subject.teacher_id : ""
+                name: film_person ? film_person.name : ""
             }}
-            displayName="SubjectForm"
+            displayName="FilmPersonForm"
             enableReinitialize={true}
             onSubmit={(values, actions) => {
                 if(id) {
@@ -74,16 +73,6 @@ function SubjectForm({ id } = props) {
                         required: true
                     }}/>
 
-                    {/* <DropdownInput attributes={{
-                        value: formikProps.values.teacher_id,
-                        name: "teacher_id",
-                        placeholder: "Assign Teacher",
-                        label: "Teacher",
-                        options: teacher_options,
-                        required: true,
-                        onChange: (event, data) => {formikProps.setFieldValue(data.name, data.value)}
-                    }}/> */}
-
                     <Divider hidden/>
                     <Button type="submit" positive disabled={formikProps.isSubmitting}>Save changes</Button>
                     <Button type="reset" disabled={formikProps.isSubmitting}>Reset</Button>
@@ -93,4 +82,4 @@ function SubjectForm({ id } = props) {
     );
 }
 
-export default SubjectForm;
+export default FilmPersonForm;
