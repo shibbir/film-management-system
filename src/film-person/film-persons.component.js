@@ -1,14 +1,11 @@
-import axios from "axios";
-import { capitalize } from "lodash";
 import { Link } from "react-router-dom";
 import { FormattedDate } from "react-intl";
-import iziToast from "izitoast/dist/js/iziToast";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon, Divider, Segment, Button, Table, Modal, Header, Dropdown, Breadcrumb, List } from "semantic-ui-react";
 
 import PersonForm from "./film-person-form.component";
-import { getFilmPersons, deleteSubject, updateSubject } from "./film-person.client.actions";
+import { getFilmPersons } from "./film-person.client.actions";
 
 export default function SubjectList() {
     const dispatch = useDispatch();
@@ -19,18 +16,6 @@ export default function SubjectList() {
     }, []);
 
     const film_persons = useSelector(state => state.filmPersonReducer.film_persons);
-
-    const onDeleteSubject = function(id) {
-        if(confirm("Are you sure you want to remove the subject?")) {
-            dispatch(deleteSubject(id)).then(function() {
-                iziToast["success"]({
-                    timeout: 3000,
-                    message: "Subject is removed.",
-                    position: "topRight"
-                });
-            });
-        }
-    };
 
     const rows = film_persons.map(function(row, index) {
         return (
@@ -95,7 +80,7 @@ export default function SubjectList() {
             }
 
             <Modal dimmer size="tiny" open={personId !== undefined}>
-                <Modal.Header>Subject Form</Modal.Header>
+                <Modal.Header>Film Related Person Form</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
                         <PersonForm id={personId}/>

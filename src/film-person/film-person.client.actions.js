@@ -11,13 +11,13 @@ export function getFilmPersons() {
     };
 }
 
-export function createSubject(subject) {
+export function createFilmPerson(data) {
     return {
-        type: Types.POST_SUBJECT,
+        type: Types.POST_FILM_PERSON,
         payload: axios({
             method: "post",
-            data: subject,
-            url: `/api/subjects`
+            data,
+            url: `/api/film-persons`
         })
     };
 }
@@ -32,39 +32,19 @@ export function getFilmPerson(id) {
     };
 }
 
-export function updateSubject(id, subject) {
+export function updateFilmPerson(id, data) {
     return {
-        type: Types.PATCH_SUBJECT,
+        type: Types.PATCH_FILM_PERSON,
         payload: axios({
             method: "patch",
-            data: subject,
-            url: `/api/subjects/${id}`
+            data,
+            url: `/api/film-persons/${id}`
         })
     };
 }
 
-export function deleteSubject(id) {
+export function resetFilmPerson() {
     return {
-        type: Types.DELETE_SUBJECT,
-        payload: axios({
-            method: "delete",
-            url: `/api/subjects/${id}`
-        })
-    };
-}
-
-export function resetSubject() {
-    return {
-        type: Types.RESET_SUBJECT
-    };
-}
-
-export function getPupilGrades(id) {
-    return {
-        type: Types.GET_PUPIL_GRADES_BY_SUBJECT,
-        payload: axios({
-            method: "get",
-            url: `/api/subjects/${id}/grades`
-        })
+        type: Types.RESET_FILM_PERSON
     };
 }

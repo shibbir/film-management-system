@@ -1,14 +1,12 @@
 const controller = require("./film-person.controller");
-// const { validateBody, validateParams } = require("../core/validator.middleware");
-// const { registrationSchema, idSchema, updateSchema } = require("./user.schema");
 
 module.exports = function(app) {
     app.route("/api/film-persons")
         .get(controller.getFilmPersons)
-        //.post(validateBody(registrationSchema), controller.createUser);
+        .post(controller.createFilmPerson);
 
     app.route("/api/film-persons/:id")
         .get(controller.getFilmPerson)
-    //     .patch(validateParams(idSchema), validateBody(updateSchema), controller.updateUser)
-    //     .delete(validateParams(idSchema), controller.deleteUser);
+        .patch(controller.updateFilmPerson)
+        .delete(controller.removeFilmPerson);
 };

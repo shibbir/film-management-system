@@ -11,7 +11,7 @@ const Person = sequelize.dbConnector.define("film_persons", {
     name: {
         unique: true,
         allowNull: false,
-        type: DataTypes.STRING(25)
+        type: DataTypes.STRING(30)
     },
     date_of_birth: {
         type: DataTypes.DATEONLY

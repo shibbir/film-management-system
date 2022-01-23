@@ -5,7 +5,7 @@ import { Divider, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { TextInput } from "../core/components/field-inputs.component";
-import { createSubject, updateSubject, getFilmPerson, resetSubject } from "./film-person.client.actions";
+import { createFilmPerson, updateFilmPerson, getFilmPerson, resetFilmPerson } from "./film-person.client.actions";
 
 function FilmPersonForm({ id } = props) {
     const dispatch = useDispatch();
@@ -14,7 +14,7 @@ function FilmPersonForm({ id } = props) {
         if(id) {
             dispatch(getFilmPerson(id));
         } else {
-            dispatch(resetSubject());
+            dispatch(resetFilmPerson());
         }
     }, [id]);
 
@@ -23,13 +23,15 @@ function FilmPersonForm({ id } = props) {
     return (
         <Formik
             initialValues={{
-                name: film_person ? film_person.name : ""
+                name: film_person ? film_person.name : "",
+                date_of_birth: film_person ? film_person.date_of_birth : "",
+                sex: film_person ? film_person.sex : ""
             }}
             displayName="FilmPersonForm"
             enableReinitialize={true}
             onSubmit={(values, actions) => {
                 if(id) {
-                    dispatch(updateSubject(id, values)).then(function() {
+                    dispatch(updateFilmPerson(id, values)).then(function() {
                         iziToast["success"]({
                             timeout: 3000,
                             message: "Your changes are saved.",
@@ -44,7 +46,7 @@ function FilmPersonForm({ id } = props) {
                         });
                     });
                 } else {
-                    dispatch(createSubject(values)).then(function() {
+                    dispatch(createFilmPerson(values)).then(function() {
                         iziToast["success"]({
                             timeout: 3000,
                             message: "Your changes are saved.",
@@ -71,6 +73,18 @@ function FilmPersonForm({ id } = props) {
                         name: "name",
                         label: "Name",
                         required: true
+                    }}/>
+
+                    <TextInput attributes={{
+                        type: "date",
+                        name: "date_of_birth",
+                        label: "Date of Birth"
+                    }}/>
+
+                    <TextInput attributes={{
+                        type: "text",
+                        name: "sex",
+                        label: "Sex"
                     }}/>
 
                     <Divider hidden/>
