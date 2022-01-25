@@ -26,6 +26,9 @@ export default function reducer(state=initialState, action) {
             });
             return { ...state, film_persons, film_person: action.payload.data };
         }
+        case Types.DELETE_FILM_PERSON_FULFILLED: {
+            return { ...state, film_persons: _.reject(state.film_persons, { id: +action.payload.data.id }) };
+        }
         case Types.RESET_FILM_PERSON: {
             return { ...state, film_person: null };
         }

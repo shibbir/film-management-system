@@ -43,6 +43,16 @@ export function updateFilmPerson(id, data) {
     };
 }
 
+export function deleteFilmPerson(id) {
+    return {
+        type: Types.DELETE_FILM_PERSON,
+        payload: axios({
+            method: "delete",
+            url: `/api/film-persons/${id}`
+        })
+    };
+}
+
 export function resetFilmPerson() {
     return {
         type: Types.RESET_FILM_PERSON

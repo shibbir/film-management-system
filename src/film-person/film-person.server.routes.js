@@ -8,5 +8,5 @@ module.exports = function(app) {
     app.route("/api/film-persons/:id")
         .get(controller.getFilmPerson)
         .patch(controller.updateFilmPerson)
-        .delete(controller.removeFilmPerson);
+        .delete(controller.deleteFilmPerson);
 };

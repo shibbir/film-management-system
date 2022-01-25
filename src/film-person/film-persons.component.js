@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { FormattedDate } from "react-intl";
+import iziToast from "izitoast/dist/js/iziToast";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Icon, Divider, Segment, Button, Table, Modal, Header, Dropdown, Breadcrumb, List } from "semantic-ui-react";
+import { Icon, Divider, Segment, Button, Table, Modal, Header, Dropdown, Breadcrumb } from "semantic-ui-react";
 
 import PersonForm from "./film-person-form.component";
-import { getFilmPersons } from "./film-person.client.actions";
+import { getFilmPersons, deleteFilmPerson } from "./film-person.client.actions";
 
 export default function SubjectList() {
     const dispatch = useDispatch();
@@ -17,6 +18,25 @@ export default function SubjectList() {
 
     const film_persons = useSelector(state => state.filmPersonReducer.film_persons);
 
+    const onDeleteFilmPerson = function(id) {
+        if(confirm("Are you sure you want to remove the person?")) {
+            dispatch(deleteFilmPerson(id)).then(function() {
+                iziToast["success"]({
+                    timeout: 3000,
+                    message: "Person is removed.",
+                    position: "topRight"
+                });
+            }).catch(function(err) {
+                iziToast["error"]({
+                    timeout: 3000,
+                    title: err.response.status,
+                    message: err.response.data,
+                    position: "topRight"
+                });
+            });
+        }
+    };
+
     const rows = film_persons.map(function(row, index) {
         return (
             <Table.Row key={row.id}>
@@ -27,7 +47,8 @@ export default function SubjectList() {
                 <Table.Cell>
                     <Dropdown>
                         <Dropdown.Menu>
-                            <Dropdown.Item icon="edit" text="Update Attributes" onClick={() => setPersonId(row.id)}/>
+                            <Dropdown.Item icon="edit" text="Update" onClick={() => setPersonId(row.id)}/>
+                            <Dropdown.Item icon="trash" text="Delete" onClick={() => onDeleteFilmPerson(row.id)}/>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Table.Cell>

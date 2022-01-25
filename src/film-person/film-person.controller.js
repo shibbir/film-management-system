@@ -26,7 +26,7 @@ async function getFilmPerson(req, res) {
 
 async function createFilmPerson(req, res) {
     try {
-        const data = await sequelize.dbConnector.query("SELECT * FROM fm.insert_film_person(:name, :date_of_birth, :sex)", {
+        const data = await sequelize.dbConnector.query("SELECT * FROM fm.insert_or_update_film_person(:name, :date_of_birth, :sex)", {
             replacements: { ...req.body },
             type: QueryTypes.SELECT
         });
@@ -39,8 +39,8 @@ async function createFilmPerson(req, res) {
 
 async function updateFilmPerson(req, res) {
     try {
-        const data = await sequelize.dbConnector.query("SELECT * FROM fm.insert_film_person(:name, :date_of_birth, :sex)", {
-            replacements: { ...req.body },
+        const data = await sequelize.dbConnector.query("SELECT * FROM fm.insert_or_update_film_person(:name, :date_of_birth, :sex, :id)", {
+            replacements: { ...req.body, id: req.params.id },
             type: QueryTypes.SELECT
         });
 
@@ -50,14 +50,13 @@ async function updateFilmPerson(req, res) {
     }
 }
 
-async function removeFilmPerson(req, res) {
+async function deleteFilmPerson(req, res) {
     try {
-        const data = await sequelize.dbConnector.query("SELECT * FROM fm.remove_film_person(:id)", {
-            replacements: { id: req.params.id },
-            type: QueryTypes.SELECT
+        await sequelize.dbConnector.query("SELECT fm.delete_film_person(:id)", {
+            replacements: { id: req.params.id }
         });
 
-        res.json(data[0]);
+        res.json({ id: req.params.id });
     } catch(err) {
         res.status(500).send(err.message);
     }
@@ -67,4 +66,4 @@ exports.getFilmPersons = getFilmPersons;
 exports.getFilmPerson = getFilmPerson;
 exports.createFilmPerson = createFilmPerson;
 exports.updateFilmPerson = updateFilmPerson;
-exports.removeFilmPerson = removeFilmPerson;
+exports.deleteFilmPerson = deleteFilmPerson;
