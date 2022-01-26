@@ -8,7 +8,7 @@ import { Icon, Divider, Segment, Button, Table, Modal, Header, Dropdown, Breadcr
 import PersonForm from "./film-person-form.component";
 import { getFilmPersons, deleteFilmPerson } from "./film-person.client.actions";
 
-export default function SubjectList() {
+export default function FilmPersons() {
     const dispatch = useDispatch();
     const [personId, setPersonId] = useState(undefined);
 

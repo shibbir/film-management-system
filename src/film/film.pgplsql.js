@@ -13,4 +13,24 @@ const create_films_table = `
     )
 `;
 
+const get_films = `
+    CREATE OR REPLACE FUNCTION fm.get_films(
+        film_id int default null
+    )
+    RETURNS SETOF fm.films
+    LANGUAGE plpgsql
+
+    AS $$
+    BEGIN
+
+        IF film_id IS NULL THEN
+            RETURN QUERY SELECT * FROM fm.films;
+        ELSE
+            RETURN QUERY SELECT * FROM fm.films WHERE id = film_id;
+        END IF;
+
+    END; $$;
+`;
+
 exports.create_films_table = create_films_table;
+exports.get_films = get_films;

@@ -11,6 +11,7 @@ import RouteContainer from "./components/route-container.component";
 import Dashboard from "./components/dashboard.component";
 
 import FilmPersonRoutes from "../film-person/film-person.client.routes";
+import FilmRoutes from "../film/film.client.routes";
 
 let refCount = 0;
 
@@ -47,6 +48,8 @@ export default function App() {
             <RouteContainer exact path="/" component={Dashboard}/>
 
             <Route path="/film-persons" component={FilmPersonRoutes}/>
+
+            <Route path="/films" component={FilmRoutes}/>
 
             <Route component={NoMatch}/>
         </Switch>

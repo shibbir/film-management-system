@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, useRouteMatch } from "react-router-dom";
 
-import Subjects from "./film-persons.component";
+import FilmPersons from "./film-persons.component";
 import PrivateRoute from "../core/components/route-container.component";
 
 export default function ClassRoutes() {
@@ -9,7 +9,7 @@ export default function ClassRoutes() {
 
     return (
         <Switch>
-            <PrivateRoute exact path={path} component={Subjects}/>
+            <PrivateRoute exact path={path} component={FilmPersons}/>
         </Switch>
     );
 }

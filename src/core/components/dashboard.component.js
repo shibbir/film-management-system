@@ -57,7 +57,7 @@ export default function Dashboard() {
                     </Card.Content>
                 </Link>
 
-                <Link className="ui raised card" to="/manage-classes">
+                <Link className="ui raised card" to="/films">
                     <Label color="blue" corner="right" size="small">
                         <Icon name="certificate"/>
                     </Label>
