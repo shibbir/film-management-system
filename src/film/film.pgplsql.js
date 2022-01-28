@@ -15,7 +15,7 @@ const create_films_table = `
 
 const get_films = `
     CREATE OR REPLACE FUNCTION fm.get_films(
-        p_id INT DEFAULT null
+        p_id INT DEFAULT NULL
     )
     RETURNS table(
         id INT,
@@ -36,14 +36,16 @@ const get_films = `
                 SELECT t1.*, t2.title as "subordinated_to_title"
                 FROM fm.films t2
                 RIGHT JOIN fm.films t1
-                ON t1.subordinated_to = t2.id;
+                ON t1.subordinated_to = t2.id
+                ORDER BY t1.release_year;
         ELSE
             RETURN QUERY
                 SELECT t1.*, t2.title as "subordinated_to_title"
                 FROM fm.films t2
                 RIGHT JOIN fm.films t1
                 ON t1.subordinated_to = t2.id
-                WHERE t1.id = p_id;
+                WHERE t1.id = p_id
+                ORDER BY t1.release_year;
         END IF;
 
     END; $$;
@@ -52,10 +54,10 @@ const get_films = `
 const insert_or_update_film = `
     CREATE OR REPLACE FUNCTION fm.insert_or_update_film(
         p_title VARCHAR,
-        p_release_year VARCHAR,
-        p_genres JSON,
+        p_release_year INT,
+        p_genres VARCHAR,
         p_production_country VARCHAR,
-        p_subordinated_to VARCHAR,
+        p_subordinated_to INT,
         p_id INT DEFAULT NULL
     )
     RETURNS SETOF fm.films
@@ -65,10 +67,11 @@ const insert_or_update_film = `
 
     DECLARE
         d_title VARCHAR := trim(p_title);
-        d_release_year INT;
-        d_genres VARCHAR[];
+        d_release_year INT := p_release_year;
+        d_genres VARCHAR[] := string_to_array(p_genres, ',');
         d_production_country VARCHAR := trim(p_production_country);
-        temp_subordinated_to INT;
+        d_subordinated_to INT := p_subordinated_to;
+        temp_subordinated_to INT := p_subordinated_to;
         temp_table RECORD;
 
     BEGIN
@@ -77,24 +80,22 @@ const insert_or_update_film = `
             RAISE not_null_violation USING MESSAGE = 'Title must not be empty.';
         END IF;
 
-        IF p_release_year = '' THEN
+        IF d_release_year = 0 THEN
             RAISE not_null_violation USING MESSAGE = 'Release year must not be empty.';
         END IF;
 
         IF p_genres = '' THEN
             RAISE not_null_violation USING MESSAGE = 'At least one genre must be selected.';
-        ELSE
-            d_genres := array_agg(json_array_elements_text(p_genres));
         END IF;
 
-        IF p_subordinated_to = '' THEN
-            p_subordinated_to := NULL;
+        IF d_production_country = '' THEN
+            d_production_country := NULL;
+        END IF;
+
+        IF d_subordinated_to = 0 THEN
+            d_subordinated_to := NULL;
             temp_subordinated_to := NULL;
-        ELSE
-            temp_subordinated_to := p_subordinated_to::INT;
         END IF;
-
-        d_release_year := p_release_year::INT;
 
         LOOP
             EXIT WHEN temp_subordinated_to IS NULL;
@@ -110,7 +111,7 @@ const insert_or_update_film = `
 
         IF p_id IS NULL THEN
             INSERT INTO fm.films(id, title, release_year, genres, production_country, subordinated_to)
-                VALUES (DEFAULT, d_title, d_release_year, d_genres, d_production_country, 2015);
+                VALUES (DEFAULT, d_title, d_release_year, d_genres, d_production_country, d_subordinated_to);
         ELSE
             IF p_subordinated_to IS NOT NULL THEN
                 SELECT * INTO temp_table FROM fm.films WHERE id = p_subordinated_to;
@@ -118,7 +119,7 @@ const insert_or_update_film = `
                     RAISE EXCEPTION 'No cycles or self references are allowed.';
                 END IF;
             END IF;
-            UPDATE fm.films SET title=d_title, release_year=d_release_year, genres=d_genres, production_country=d_production_country, subordinated_to=p_subordinated_to WHERE id = p_id;
+            UPDATE fm.films SET title=d_title, release_year=d_release_year, genres=d_genres, production_country=d_production_country, subordinated_to=d_subordinated_to WHERE id = p_id;
         END IF;
 
         RETURN QUERY SELECT * FROM fm.films WHERE title = d_title;

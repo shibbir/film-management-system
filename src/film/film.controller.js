@@ -27,7 +27,13 @@ async function getFilm(req, res) {
 async function createFilm(req, res) {
     try {
         const data = await sequelize.dbConnector.query("SELECT * FROM fm.insert_or_update_film(:title, :release_year, :genres, :production_country, :subordinated_to)", {
-            replacements: { ...req.body },
+            replacements: {
+                title: req.body.title,
+                release_year: +req.body.release_year,
+                genres: req.body.genres.join(),
+                production_country: req.body.production_country,
+                subordinated_to: +req.body.subordinated_to
+            },
             type: QueryTypes.SELECT
         });
 
@@ -40,7 +46,14 @@ async function createFilm(req, res) {
 async function updateFilm(req, res) {
     try {
         const data = await sequelize.dbConnector.query("SELECT * FROM fm.insert_or_update_film(:title, :release_year, :genres, :production_country, :subordinated_to, :id)", {
-            replacements: { ...req.body, id: req.params.id },
+            replacements: {
+                id: req.params.id,
+                title: req.body.title,
+                release_year: +req.body.release_year,
+                genres: req.body.genres.join(),
+                production_country: req.body.production_country,
+                subordinated_to: +req.body.subordinated_to
+            },
             type: QueryTypes.SELECT
         });
 

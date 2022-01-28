@@ -5,7 +5,7 @@ import { Divider, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { TextInput, DropdownInput } from "../core/components/field-inputs.component";
-import { createFilm, updateFilm, getFilm, resetFilm } from "./film.actions";
+import { createFilm, updateFilm, getFilm, resetFilm, getFilms } from "./film.actions";
 
 function FilmForm({ id } = props) {
     const dispatch = useDispatch();
@@ -50,6 +50,8 @@ function FilmForm({ id } = props) {
             onSubmit={(values, actions) => {
                 if(id) {
                     dispatch(updateFilm(id, values)).then(function() {
+                        dispatch(getFilms());
+
                         iziToast["success"]({
                             timeout: 3000,
                             message: "Your changes are saved.",
@@ -65,12 +67,14 @@ function FilmForm({ id } = props) {
                     });
                 } else {
                     dispatch(createFilm(values)).then(function() {
+                        dispatch(getFilms());
+                        actions.resetForm();
+
                         iziToast["success"]({
                             timeout: 3000,
                             message: "Your changes are saved.",
                             position: "topRight"
                         });
-                        actions.resetForm();
                     }).catch(function(err) {
                         iziToast["error"]({
                             timeout: 3000,
