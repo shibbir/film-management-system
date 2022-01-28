@@ -42,8 +42,9 @@ export default function FilmList() {
                 <Table.Cell>{index+1}</Table.Cell>
                 <Table.Cell>{row.title}</Table.Cell>
                 <Table.Cell>{row.release_year}</Table.Cell>
-                <Table.Cell>{row.genres}</Table.Cell>
+                <Table.Cell>{row.genres.join(', ')}</Table.Cell>
                 <Table.Cell>{row.production_country}</Table.Cell>
+                <Table.Cell>{row.subordinated_to ? row.subordinated_to_title : '--'}</Table.Cell>
                 <Table.Cell>
                     <Dropdown>
                         <Dropdown.Menu>
@@ -82,6 +83,7 @@ export default function FilmList() {
                             <Table.HeaderCell>Release Year</Table.HeaderCell>
                             <Table.HeaderCell>Genres</Table.HeaderCell>
                             <Table.HeaderCell>Production Country</Table.HeaderCell>
+                            <Table.HeaderCell>Subordinated To</Table.HeaderCell>
                             <Table.HeaderCell>Actions</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>

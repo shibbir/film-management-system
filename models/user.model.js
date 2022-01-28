@@ -14,7 +14,7 @@ const User = sequelize.dbConnector.define("users", {
         type: DataTypes.STRING(25)
     }
 }, {
-    schema: process.env.POSTGRES_DATABASE_SCHEMA,
+    schema: "fm",
     tableName: "users",
     timestamps: false
 });

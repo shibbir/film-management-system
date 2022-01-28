@@ -9,7 +9,7 @@ const create_film_persons_table = `
 
 const get_film_persons = `
     CREATE OR REPLACE FUNCTION fm.get_film_persons(
-        person_id int default null
+        p_id INT DEFAULT NULL
     )
     RETURNS SETOF fm.film_persons
     LANGUAGE plpgsql
@@ -17,10 +17,10 @@ const get_film_persons = `
     AS $$
     BEGIN
 
-        IF person_id IS NULL THEN
+        IF p_id IS NULL THEN
             RETURN QUERY SELECT * FROM fm.film_persons;
         ELSE
-            RETURN QUERY SELECT * FROM fm.film_persons WHERE id = person_id;
+            RETURN QUERY SELECT * FROM fm.film_persons WHERE id = p_id;
         END IF;
 
     END; $$;
@@ -28,10 +28,10 @@ const get_film_persons = `
 
 const insert_or_update_film_person = `
     CREATE OR REPLACE FUNCTION fm.insert_or_update_film_person(
-        p_name varchar,
-        p_date_of_birth varchar,
-        p_sex varchar,
-        p_id int default null
+        p_name VARCHAR,
+        p_date_of_birth VARCHAR,
+        p_sex VARCHAR,
+        p_id INT DEFAULT NULL
     )
     RETURNS SETOF fm.film_persons
     LANGUAGE plpgsql
@@ -39,9 +39,9 @@ const insert_or_update_film_person = `
     AS $$
 
     DECLARE
-        person_name varchar := trim(p_name);
-        person_dob varchar := p_date_of_birth;
-        person_sex varchar := trim(p_sex);
+        person_name VARCHAR := trim(p_name);
+        person_dob VARCHAR := p_date_of_birth;
+        person_sex VARCHAR := trim(p_sex);
 
     BEGIN
 
@@ -53,7 +53,7 @@ const insert_or_update_film_person = `
             person_dob := null;
         END IF;
 
-        IF p_id IS null THEN
+        IF p_id IS NULL THEN
             IF EXISTS (SELECT 1 FROM fm.film_persons WHERE name = person_name) THEN
                 RAISE unique_violation USING MESSAGE = 'Person name already exists. Please try again with a different name.';
             ELSE
@@ -63,7 +63,7 @@ const insert_or_update_film_person = `
             IF EXISTS (SELECT 1 FROM fm.film_persons WHERE name = person_name AND id != p_id) THEN
                 RAISE unique_violation USING MESSAGE = 'Person name already exists. Please try again with a different name.';
             ELSE
-                UPDATE fm.film_persons SET name=person_name, date_of_birth=person_dob::date, sex=person_sex WHERE id = p_id;
+                UPDATE fm.film_persons SET name=person_name, date_of_birth=person_dob::DATE, sex=person_sex WHERE id = p_id;
             END IF;
         END IF;
 
@@ -73,7 +73,7 @@ const insert_or_update_film_person = `
 `;
 
 const delete_film_person = `
-    CREATE OR REPLACE FUNCTION fm.delete_film_person(p_id int)
+    CREATE OR REPLACE FUNCTION fm.delete_film_person(p_id INT)
     RETURNS void
     LANGUAGE plpgsql
 

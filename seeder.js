@@ -6,16 +6,16 @@ async function init() {
     await sequelize.dbConnector.query("DROP SCHEMA fm CASCADE");
     await sequelize.dbConnector.query("CREATE SCHEMA IF NOT EXISTS fm");
 
-    //require("./models/film.model");
-    //require("./models/film-person.model");
+    // require("./models/film.model");
+    // require("./models/film-person.model");
     // require("./models/film-role.model");
     // require("./models/user.model");
     // require("./models/film-rating.model");
 
-    //await sequelize.dbConnector.sync({ force: true });
+    // await sequelize.dbConnector.sync();
 
     const {  create_film_persons_table, get_film_persons, insert_or_update_film_person, delete_film_person } = require("./src/film-person/film-person.pgplsql");
-    const {  create_films_table, get_films } = require("./src/film/film.pgplsql");
+    const {  create_films_table, get_films, insert_or_update_film } = require("./src/film/film.pgplsql");
     const {  create_film_roles_table } = require("./src/film/film-role.pgplsql");
     const {  create_users_table } = require("./src/user/user.pgplsql");
     const {  create_film_ratings_table } = require("./src/film-rating/film-rating.pgplsql");
@@ -27,6 +27,9 @@ async function init() {
 
     await sequelize.dbConnector.query(create_films_table);
     await sequelize.dbConnector.query(get_films);
+    try{
+    await sequelize.dbConnector.query(insert_or_update_film);
+    }catch(e) {console.error(e);}
 
     await sequelize.dbConnector.query(create_film_roles_table);
     await sequelize.dbConnector.query(create_users_table);

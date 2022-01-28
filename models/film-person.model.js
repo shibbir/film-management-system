@@ -20,7 +20,7 @@ const Person = sequelize.dbConnector.define("film_persons", {
         type: DataTypes.STRING(10)
     }
 }, {
-    schema: process.env.POSTGRES_DATABASE_SCHEMA,
+    schema: "fm",
     tableName: "film_persons",
     timestamps: false
 });

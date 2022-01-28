@@ -27,12 +27,12 @@ const Film = sequelize.dbConnector.define("films", {
         type: DataTypes.INTEGER
     }
 }, {
-    schema: process.env.POSTGRES_DATABASE_SCHEMA,
+    schema: "fm",
     tableName: "films",
     timestamps: false
 });
 
-Film.hasOne(Film, { as: 'child_film', foreignKey: 'subordinated_to' });
+Film.hasMany(Film, { as: 'child_films', foreignKey: 'subordinated_to' });
 Film.belongsTo(Film, { as: 'parent_film', foreignKey: 'subordinated_to' });
 
 module.exports = Film;

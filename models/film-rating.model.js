@@ -15,7 +15,7 @@ const FilmRating = sequelize.dbConnector.define("film_ratings", {
         type: DataTypes.INTEGER
     }
 }, {
-    schema: process.env.POSTGRES_DATABASE_SCHEMA,
+    schema: "fm",
     tableName: "film_ratings",
     timestamps: false
 });

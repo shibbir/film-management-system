@@ -4,7 +4,7 @@ import iziToast from "izitoast/dist/js/iziToast";
 import { Divider, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { TextInput } from "../core/components/field-inputs.component";
+import { TextInput, DropdownInput } from "../core/components/field-inputs.component";
 import { createFilm, updateFilm, getFilm, resetFilm } from "./film.actions";
 
 function FilmForm({ id } = props) {
@@ -19,13 +19,31 @@ function FilmForm({ id } = props) {
     }, [id]);
 
     const film = useSelector(state => state.filmReducer.film);
+    const films = useSelector(state => state.filmReducer.films);
+
+    const film_options = films.map(function(option) {
+        return { key: option.id, value: option.id, text: `${option.title} [${option.release_year}]` };
+    });
+
+    const genre_options = [
+        { key: 1, value: "Action", text: "Action" },
+        { key: 2, value: "Adventure", text: "Adventure" },
+        { key: 3, value: "Crime", text: "Crime" },
+        { key: 4, value: "Drama", text: "Drama" },
+        { key: 5, value: "Narrative", text: "Narrative" },
+        { key: 6, value: "Romance", text: "Romance" },
+        { key: 7, value: "Sci-Fi", text: "Sci-Fi" },
+        { key: 8, value: "Thriller", text: "Thriller" }
+    ];
 
     return (
         <Formik
             initialValues={{
                 title: film ? film.title : "",
                 release_year: film ? film.release_year : "",
-                production_country: film ? film.production_country : ""
+                production_country: film ? film.production_country : "",
+                subordinated_to: film ? film.subordinated_to : "",
+                genres: film ? film.genres : []
             }}
             displayName="FilmForm"
             enableReinitialize={true}
@@ -82,10 +100,28 @@ function FilmForm({ id } = props) {
                         required: true
                     }}/>
 
+                    <DropdownInput attributes={{
+                        value: formikProps.values.genres,
+                        name: "genres",
+                        label: "Genres",
+                        options: genre_options,
+                        required: true,
+                        multiple: true,
+                        onChange: (event, data) => {formikProps.setFieldValue(data.name, data.value)}
+                    }}/>
+
                     <TextInput attributes={{
                         type: "text",
                         name: "production_country",
                         label: "Production Country"
+                    }}/>
+
+                    <DropdownInput attributes={{
+                        value: formikProps.values.subordinated_to,
+                        name: "subordinated_to",
+                        label: "Subordinated To",
+                        options: film_options,
+                        onChange: (event, data) => {formikProps.setFieldValue(data.name, data.value)}
                     }}/>
 
                     <Divider hidden/>
