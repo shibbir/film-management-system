@@ -18,8 +18,9 @@ export default function FilmList() {
     const films = useSelector(state => state.filmReducer.films);
 
     const onDeleteFilm = function(id) {
-        if(confirm("Are you sure you want to remove the person?")) {
+        if(confirm("Are you sure you want to remove the film? Subordinated films and related film user ratings will also be removed.")) {
             dispatch(deleteFilm(id)).then(function() {
+                dispatch(getFilms());
                 iziToast["success"]({
                     timeout: 3000,
                     message: "Film is removed.",

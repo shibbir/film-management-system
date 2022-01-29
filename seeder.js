@@ -16,7 +16,7 @@ async function init() {
         // await sequelize.dbConnector.sync();
 
         const {  create_film_persons_table, get_film_persons, insert_or_update_film_person, delete_film_person } = require("./src/film-person/film-person.pgplsql");
-        const {  create_films_table, get_films, insert_or_update_film } = require("./src/film/film.pgplsql");
+        const {  create_films_table, get_films, insert_or_update_film, delete_film } = require("./src/film/film.pgplsql");
         const {  create_film_roles_table, get_film_roles } = require("./src/film/film-role.pgplsql");
         const {  create_users_table } = require("./src/user/user.pgplsql");
         const {  create_film_ratings_table } = require("./src/film-rating/film-rating.pgplsql");
@@ -29,6 +29,7 @@ async function init() {
         await sequelize.dbConnector.query(create_films_table);
         await sequelize.dbConnector.query(get_films);
         await sequelize.dbConnector.query(insert_or_update_film);
+        await sequelize.dbConnector.query(delete_film);
 
         await sequelize.dbConnector.query(create_film_roles_table);
         await sequelize.dbConnector.query(get_film_roles);
