@@ -103,7 +103,7 @@ export default function FilmList() {
                 </Segment>
             }
 
-            <Modal dimmer size="tiny" open={filmId !== undefined}>
+            <Modal dimmer size="small" open={filmId !== undefined}>
                 <Modal.Header>Film Form</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>

@@ -3,7 +3,7 @@ const create_films_table = `
         id SERIAL PRIMARY KEY,
         title VARCHAR(50) NOT NULL,
         release_year INT NOT NULL,
-        genres varchar(20)[],
+        genres varchar(20)[] NOT NULL,
         production_country VARCHAR(30),
         subordinated_to INT,
         CONSTRAINT films_subordinated_to_fkey FOREIGN KEY (subordinated_to)
@@ -58,6 +58,7 @@ const insert_or_update_film = `
         p_genres VARCHAR,
         p_production_country VARCHAR,
         p_subordinated_to INT,
+        p_film_roles JSON,
         p_id INT DEFAULT NULL
     )
     RETURNS SETOF fm.films
@@ -73,6 +74,8 @@ const insert_or_update_film = `
         d_subordinated_to INT := p_subordinated_to;
         temp_subordinated_to INT := p_subordinated_to;
         temp_table RECORD;
+        i JSON;
+        d_id INT := p_id;
 
     BEGIN
 
@@ -109,20 +112,24 @@ const insert_or_update_film = `
             temp_subordinated_to := temp_table.subordinated_to;
         END LOOP;
 
-        IF p_id IS NULL THEN
+        IF d_id IS NULL THEN
             INSERT INTO fm.films(id, title, release_year, genres, production_country, subordinated_to)
-                VALUES (DEFAULT, d_title, d_release_year, d_genres, d_production_country, d_subordinated_to);
+                VALUES (DEFAULT, d_title, d_release_year, d_genres, d_production_country, d_subordinated_to) RETURNING id INTO d_id;
         ELSE
             IF p_subordinated_to IS NOT NULL THEN
                 SELECT * INTO temp_table FROM fm.films WHERE id = p_subordinated_to;
-                IF temp_table.subordinated_to = p_id OR temp_table.id = p_id THEN
+                IF temp_table.subordinated_to = d_id OR temp_table.id = d_id THEN
                     RAISE EXCEPTION 'No cycles or self references are allowed.';
                 END IF;
             END IF;
-            UPDATE fm.films SET title=d_title, release_year=d_release_year, genres=d_genres, production_country=d_production_country, subordinated_to=d_subordinated_to WHERE id = p_id;
+            UPDATE fm.films SET title=d_title, release_year=d_release_year, genres=d_genres, production_country=d_production_country, subordinated_to=d_subordinated_to WHERE id = d_id;
         END IF;
 
-        RETURN QUERY SELECT * FROM fm.films WHERE title = d_title;
+        FOR i IN SELECT * FROM json_array_elements(p_film_roles) LOOP
+            INSERT INTO fm.film_roles(film_id, person_id, roles) VALUES (d_id, (i->>'person_id')::INT, string_to_array(TRANSLATE(i->>'roles', '[]"', '') , ','));
+        END LOOP;
+
+        RETURN QUERY SELECT * FROM fm.films WHERE id = d_id;
 
     END; $$;
 `;

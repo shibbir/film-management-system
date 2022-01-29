@@ -18,6 +18,7 @@ const Film = sequelize.dbConnector.define("films", {
         type: DataTypes.INTEGER
     },
     genres: {
+        allowNull: false,
         type: DataTypes.ARRAY(DataTypes.STRING)
     },
     production_country: {

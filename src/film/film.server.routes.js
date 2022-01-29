@@ -9,4 +9,7 @@ module.exports = function(app) {
         .get(controller.getFilm)
         .patch(controller.updateFilm)
         .delete(controller.deleteFilm);
+
+    app.route("/api/films/:id/roles")
+        .get(controller.getFilmRoles);
 };

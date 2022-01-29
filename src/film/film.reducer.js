@@ -23,6 +23,9 @@ export default function reducer(state=initialState, action) {
         case Types.RESET_FILM: {
             return { ...state, film: null };
         }
+        case Types.GET_FILM_ROLES_FULFILLED: {
+            return { ...state, film: { ...state.film, film_roles: action.payload.data } };
+        }
     }
     return state;
 }

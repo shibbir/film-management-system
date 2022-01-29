@@ -11,6 +11,16 @@ export function getFilms() {
     };
 }
 
+export function getFilmRoles(id) {
+    return {
+        type: Types.GET_FILM_ROLES,
+        payload: axios({
+            method: "get",
+            url: `/api/films/${id}/roles`
+        })
+    };
+}
+
 export function createFilm(data) {
     return {
         type: Types.POST_FILM,
