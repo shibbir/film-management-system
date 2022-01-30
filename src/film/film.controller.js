@@ -1,98 +1,92 @@
 const { QueryTypes } = require("sequelize");
 const sequelize = require("../config/sequelize");
 
-async function getFilms(req, res) {
-    try {
-        const data = await sequelize.dbConnector.query("SELECT * FROM fm.get_films()", { type: QueryTypes.SELECT });
+module.exports = function(app) {
+    app.route("/api/films")
+        .get(async function(req, res) {
+            try {
+                const data = await sequelize.dbConnector.query("SELECT * FROM fm.get_films()", { type: QueryTypes.SELECT });
 
-        res.json(data);
-    } catch(err) {
-        res.status(500).send(err.message);
-    }
-}
+                res.json(data);
+            } catch(err) {
+                res.status(500).send(err.message);
+            }
+        })
+        .post(async function(req, res) {
+            try {
+                await sequelize.dbConnector.query("SELECT fm.insert_or_update_film(:title, :release_year, :genres, :production_country, :subordinated_to, :film_roles)", {
+                    replacements: {
+                        title: req.body.title,
+                        release_year: +req.body.release_year,
+                        genres: req.body.genres.join(),
+                        production_country: req.body.production_country,
+                        subordinated_to: +req.body.subordinated_to,
+                        film_roles: JSON.stringify(req.body.film_roles)
+                    }
+                });
 
-async function getFilm(req, res) {
-    try {
-        const data = await sequelize.dbConnector.query("SELECT * FROM fm.get_films(:id)", {
-            replacements: { id: req.params.id },
-            type: QueryTypes.SELECT
-        });
+                res.sendStatus(200);
+            } catch(err) {
+                res.status(500).send(err.message);
+            }
+        })
+    ;
 
-        res.json(data[0]);
-    } catch(err) {
-        res.status(500).send(err.message);
-    }
-}
+    app.route("/api/films/:id")
+        .get(async function(req, res) {
+            try {
+                const data = await sequelize.dbConnector.query("SELECT * FROM fm.get_films(:id)", {
+                    replacements: { id: req.params.id },
+                    type: QueryTypes.SELECT
+                });
 
-async function createFilm(req, res) {
-    try {
-        const data = await sequelize.dbConnector.query("SELECT * FROM fm.insert_or_update_film(:title, :release_year, :genres, :production_country, :subordinated_to, :film_roles)", {
-            replacements: {
-                title: req.body.title,
-                release_year: +req.body.release_year,
-                genres: req.body.genres.join(),
-                production_country: req.body.production_country,
-                subordinated_to: +req.body.subordinated_to,
-                film_roles: JSON.stringify(req.body.film_roles)
-            },
-            type: QueryTypes.SELECT
-        });
+                res.json(data[0]);
+            } catch(err) {
+                res.status(500).send(err.message);
+            }
+        })
+        .patch(async function(req, res) {
+            try {
+                await sequelize.dbConnector.query("SELECT fm.insert_or_update_film(:title, :release_year, :genres, :production_country, :subordinated_to, :film_roles, :id)", {
+                    replacements: {
+                        id: req.params.id,
+                        title: req.body.title,
+                        release_year: +req.body.release_year,
+                        genres: req.body.genres.join(),
+                        production_country: req.body.production_country,
+                        subordinated_to: +req.body.subordinated_to,
+                        film_roles: JSON.stringify(req.body.film_roles)
+                    }
+                });
 
-        res.json(data[0]);
-    } catch(err) {
-        res.status(500).send(err.message);
-    }
-}
+                res.sendStatus(200);
+            } catch(err) {
+                res.status(500).send(err.message);
+            }
+        })
+        .delete(async function(req, res) {
+            try {
+                await sequelize.dbConnector.query("SELECT fm.delete_film(:id)", {
+                    replacements: { id: req.params.id }
+                });
 
-async function updateFilm(req, res) {
-    try {
-        const data = await sequelize.dbConnector.query("SELECT * FROM fm.insert_or_update_film(:title, :release_year, :genres, :production_country, :subordinated_to, :film_roles, :id)", {
-            replacements: {
-                id: req.params.id,
-                title: req.body.title,
-                release_year: +req.body.release_year,
-                genres: req.body.genres.join(),
-                production_country: req.body.production_country,
-                subordinated_to: +req.body.subordinated_to,
-                film_roles: JSON.stringify(req.body.film_roles)
-            },
-            type: QueryTypes.SELECT
-        });
+                res.sendStatus(200);
+            } catch(err) {
+                res.status(500).send(err.message);
+            }
+        })
+    ;
 
-        res.json(data[0]);
-    } catch(err) {
-        res.status(500).send(err.message);
-    }
-}
+    app.route("/api/films/:id/roles").get(async function(req, res) {
+        try {
+            const data = await sequelize.dbConnector.query("SELECT * FROM fm.get_film_roles(:id)", {
+                replacements: { id: req.params.id },
+                type: QueryTypes.SELECT
+            });
 
-async function deleteFilm(req, res) {
-    try {
-        await sequelize.dbConnector.query("SELECT fm.delete_film(:id)", {
-            replacements: { id: req.params.id }
-        });
-
-        res.sendStatus(200);
-    } catch(err) {
-        res.status(500).send(err.message);
-    }
-}
-
-async function getFilmRoles(req, res) {
-    try {
-        const data = await sequelize.dbConnector.query("SELECT * FROM fm.get_film_roles(:id)", {
-            replacements: { id: req.params.id },
-            type: QueryTypes.SELECT
-        });
-
-        res.json(data);
-    } catch(err) {
-        res.status(500).send(err.message);
-    }
-}
-
-exports.getFilms = getFilms;
-exports.getFilm = getFilm;
-exports.createFilm = createFilm;
-exports.updateFilm = updateFilm;
-exports.deleteFilm = deleteFilm;
-exports.getFilmRoles = getFilmRoles;
+            res.json(data);
+        } catch(err) {
+            res.status(500).send(err.message);
+        }
+    });
+};

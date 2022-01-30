@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Icon, Divider, Segment, Button, Table, Modal, Header, Dropdown, Breadcrumb } from "semantic-ui-react";
 
 import PersonForm from "./film-person-form.component";
-import { getFilmPersons, deleteFilmPerson } from "./film-person.client.actions";
+import { getFilmPersons, deleteFilmPerson } from "./film-person.actions";
 
 export default function FilmPersons() {
     const dispatch = useDispatch();
@@ -21,6 +21,8 @@ export default function FilmPersons() {
     const onDeleteFilmPerson = function(id) {
         if(confirm("Are you sure you want to remove the person?")) {
             dispatch(deleteFilmPerson(id)).then(function() {
+                dispatch(getFilmPersons());
+
                 iziToast["success"]({
                     timeout: 3000,
                     message: "Person is removed.",

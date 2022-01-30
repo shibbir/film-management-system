@@ -1,9 +1,8 @@
 import axios from "axios";
-import Types from "./film.types";
 
 export function getFilms() {
     return {
-        type: Types.GET_FILMS,
+        type: "GET_FILMS",
         payload: axios({
             method: "get",
             url: "/api/films"
@@ -13,7 +12,7 @@ export function getFilms() {
 
 export function getFilmRoles(id) {
     return {
-        type: Types.GET_FILM_ROLES,
+        type: "GET_FILM_ROLES",
         payload: axios({
             method: "get",
             url: `/api/films/${id}/roles`
@@ -23,7 +22,7 @@ export function getFilmRoles(id) {
 
 export function createFilm(data) {
     return {
-        type: Types.POST_FILM,
+        type: "POST_FILM",
         payload: axios({
             method: "post",
             data,
@@ -34,7 +33,7 @@ export function createFilm(data) {
 
 export function getFilm(id) {
     return {
-        type: Types.GET_FILM,
+        type: "GET_FILM",
         payload: axios({
             method: "get",
             url: `/api/films/${id}`
@@ -44,7 +43,7 @@ export function getFilm(id) {
 
 export function updateFilm(id, data) {
     return {
-        type: Types.PATCH_FILM,
+        type: "PATCH_FILM",
         payload: axios({
             method: "patch",
             data,
@@ -55,7 +54,7 @@ export function updateFilm(id, data) {
 
 export function deleteFilm(id) {
     return {
-        type: Types.DELETE_FILM,
+        type: "DELETE_FILM",
         payload: axios({
             method: "delete",
             url: `/api/films/${id}`
@@ -65,6 +64,6 @@ export function deleteFilm(id) {
 
 export function resetFilm() {
     return {
-        type: Types.RESET_FILM
+        type: "RESET_FILM"
     };
 }

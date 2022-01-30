@@ -18,9 +18,9 @@ const get_film_persons = `
     BEGIN
 
         IF p_id IS NULL THEN
-            RETURN QUERY SELECT * FROM fm.film_persons;
+            RETURN QUERY SELECT * FROM fm.film_persons ORDER BY name;
         ELSE
-            RETURN QUERY SELECT * FROM fm.film_persons WHERE id = p_id;
+            RETURN QUERY SELECT * FROM fm.film_persons WHERE id = p_id ORDER BY name;
         END IF;
 
     END; $$;
@@ -33,7 +33,7 @@ const insert_or_update_film_person = `
         p_sex VARCHAR,
         p_id INT DEFAULT NULL
     )
-    RETURNS SETOF fm.film_persons
+    RETURNS void
     LANGUAGE plpgsql
 
     AS $$
@@ -67,8 +67,6 @@ const insert_or_update_film_person = `
             END IF;
         END IF;
 
-        RETURN QUERY SELECT * FROM fm.film_persons WHERE name = person_name;
-
     END; $$;
 `;
 
@@ -84,9 +82,10 @@ const delete_film_person = `
             RAISE EXCEPTION 'Person not found.';
         END IF;
 
-        DELETE FROM fm.film_persons WHERE id = p_id;
+        DELETE FROM fm.films t1 USING fm.film_roles t2
+        WHERE t2.person_id = p_id AND t2.film_id = t1.id;
 
-        DELETE FROM fm.film_roles WHERE person_id = p_id;
+        DELETE FROM fm.film_persons WHERE id = p_id;
 
     END; $$;
 `;

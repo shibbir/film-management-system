@@ -19,12 +19,12 @@ const get_films = `
     )
     RETURNS table(
         id INT,
-        title VARCHAR(50),
+        title VARCHAR,
         release_year INT,
-        genres VARCHAR(30)[],
-        production_country VARCHAR(30),
+        genres VARCHAR[],
+        production_country VARCHAR,
         subordinated_to INT,
-        subordinated_to_title VARCHAR(30)
+        subordinated_to_title VARCHAR
     )
     LANGUAGE plpgsql
     AS $$
@@ -61,7 +61,7 @@ const insert_or_update_film = `
         p_film_roles JSONB,
         p_id INT DEFAULT NULL
     )
-    RETURNS SETOF fm.films
+    RETURNS void
     LANGUAGE plpgsql
 
     AS $$
@@ -135,8 +135,6 @@ const insert_or_update_film = `
                 translate((i->>'roles')::JSONB::VARCHAR, '[]','{}')::VARCHAR[]
             );
         END LOOP;
-
-        RETURN QUERY SELECT * FROM fm.films WHERE id = d_id;
 
     END; $$;
 `;

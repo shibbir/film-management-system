@@ -1,5 +1,5 @@
 # Film Manager
-> A single page application for managing films, film related person and film ratings.
+> A single page application for managing films, film related persons and film ratings.
 
 ## Development Environment Setup
 - [Install Node.js >= 14.5](https://nodejs.org/en/)
@@ -19,7 +19,7 @@ POSTGRES_DATABASE | Yes | `film_manager` | PostgreSQL database name
 > First, open your favorite terminal or command prompt and navigate to the project root directory. After that, execute from the below scripts as necessary:
 
 ```bash
-# To install npm packages
+# To install the npm packages
 $ npm install
 
 # To drop and re-create the schema, tables, functions

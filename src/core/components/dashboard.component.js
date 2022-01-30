@@ -8,7 +8,7 @@ export default function Dashboard() {
             <Message
                 info
                 icon="info"
-                header="Welcome to the Film Manager v1.0.0"
+                header="Welcome to the Film Manager"
                 content="Select any of the below services to get started."
             />
 
@@ -20,36 +20,27 @@ export default function Dashboard() {
                         <Icon name="user"/>
                     </Label>
                     <Card.Content extra>
-                        <Card.Header>Film Related Person Management</Card.Header>
+                        <Card.Header>Management of Film Related Persons</Card.Header>
                     </Card.Content>
                     <Card.Content>
                         <Feed>
                             <Feed.Event>
-                                <Feed.Label icon="users"/>
+                                <Feed.Label icon="hand point right outline"/>
                                 <Feed.Content>
-                                    <Feed.Date content="Overview of All Users"/>
                                     <Feed.Summary>
-                                        View all types of users currently registered into the system.
+                                        Overview of all film related persons.
                                     </Feed.Summary>
                                 </Feed.Content>
                             </Feed.Event>
 
-                            <Feed.Event>
-                                <Feed.Label icon="sign in"/>
-                                <Feed.Content>
-                                    <Feed.Date content="Manage User Registration"/>
-                                    <Feed.Summary>
-                                        Create new users with roles. Remove existing users.
-                                    </Feed.Summary>
-                                </Feed.Content>
-                            </Feed.Event>
+                            <Feed.Event></Feed.Event>
+                            <Feed.Event></Feed.Event>
 
                             <Feed.Event>
-                                <Feed.Label icon="pencil"/>
+                                <Feed.Label icon="hand point right outline"/>
                                 <Feed.Content>
-                                    <Feed.Date content="Update User Attributes"/>
                                     <Feed.Summary>
-                                        Modify user attributes such as forename, surname, etc.
+                                        Manage person attributes such as name, birthdate, etc.
                                     </Feed.Summary>
                                 </Feed.Content>
                             </Feed.Event>
@@ -59,39 +50,30 @@ export default function Dashboard() {
 
                 <Link className="ui raised card" to="/films">
                     <Label color="blue" corner="right" size="small">
-                        <Icon name="certificate"/>
+                        <Icon name="film"/>
                     </Label>
                     <Card.Content extra>
-                        <Card.Header>Film Management</Card.Header>
+                        <Card.Header>Management of Films</Card.Header>
                     </Card.Content>
                     <Card.Content>
                         <Feed>
                             <Feed.Event>
-                                <Feed.Label icon="certificate"/>
+                                <Feed.Label icon="hand point right outline"/>
                                 <Feed.Content>
-                                    <Feed.Date content="Manage Classes"/>
                                     <Feed.Summary>
-                                        View and export all classes currently in the system. Create, modify, remove classes.
+                                        Overview of all the available films.
                                     </Feed.Summary>
                                 </Feed.Content>
                             </Feed.Event>
 
-                            <Feed.Event>
-                                <Feed.Label icon="book"/>
-                                <Feed.Content>
-                                    <Feed.Date content="Subjects Assignment"/>
-                                    <Feed.Summary>
-                                        Manage bulk assignments or deassignments of subjects into a class.
-                                    </Feed.Summary>
-                                </Feed.Content>
-                            </Feed.Event>
+                            <Feed.Event></Feed.Event>
+                            <Feed.Event></Feed.Event>
 
                             <Feed.Event>
-                                <Feed.Label icon="student"/>
+                                <Feed.Label icon="hand point right outline"/>
                                 <Feed.Content>
-                                    <Feed.Date content="Pupils Enrolment"/>
                                     <Feed.Summary>
-                                        Manage bulk assignments or deassignments of pupils into a class.
+                                        Manage film attributes, film roles, and subordinated films.
                                     </Feed.Summary>
                                 </Feed.Content>
                             </Feed.Event>
@@ -99,29 +81,30 @@ export default function Dashboard() {
                     </Card.Content>
                 </Link>
 
-                <Link className="ui raised card" to="/manage-subjects">
+                <Link className="ui raised card" to="/film-ratings">
                     <Label color="blue" corner="right" size="small">
-                        <Icon name="book"/>
+                        <Icon name="star"/>
                     </Label>
                     <Card.Content extra>
-                        <Card.Header>Film Rating Management</Card.Header>
+                        <Card.Header>Management of Film Ratings</Card.Header>
                     </Card.Content>
                     <Card.Content>
                         <Feed>
                             <Feed.Event>
-                                <Feed.Label icon="book"/>
+                                <Feed.Label icon="hand point right outline"/>
                                 <Feed.Content>
-                                    <Feed.Date content="Manage Subjects"/>
                                     <Feed.Summary>
-                                        View and export all subjects currently available in the system.
+                                        Overview of all existing film ratings.
                                     </Feed.Summary>
                                 </Feed.Content>
                             </Feed.Event>
 
+                            <Feed.Event></Feed.Event>
+                            <Feed.Event></Feed.Event>
+
                             <Feed.Event>
-                                <Feed.Label icon="pencil"/>
+                                <Feed.Label icon="hand point right outline"/>
                                 <Feed.Content>
-                                    <Feed.Date content="Manage Subjects"/>
                                     <Feed.Summary>
                                         Create, modify, remove, archive subjects. Assign teacher per subject.
                                     </Feed.Summary>

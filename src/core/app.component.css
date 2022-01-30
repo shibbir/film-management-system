@@ -27,3 +27,7 @@ a[disabled] {
 .site-content {
     flex: 1;
 }
+
+.dv-star-rating-star {
+    font-size: 20px;
+}

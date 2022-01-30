@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { TextInput, DropdownInput } from "../core/components/field-inputs.component";
 import { createFilm, updateFilm, getFilm, resetFilm, getFilms, getFilmRoles } from "./film.actions";
-import { getFilmPersons } from "../film-person/film-person.client.actions";
+import { getFilmPersons } from "../film-person/film-person.actions";
 
 function FilmForm({ id } = props) {
     const dispatch = useDispatch();

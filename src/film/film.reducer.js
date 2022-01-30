@@ -1,6 +1,3 @@
-import _ from "lodash";
-import Types from "./film.types";
-
 const initialState = {
     films: [],
     film: null
@@ -8,16 +5,16 @@ const initialState = {
 
 export default function reducer(state=initialState, action) {
     switch (action.type) {
-        case Types.GET_FILMS_FULFILLED: {
+        case "GET_FILMS_FULFILLED": {
             return { ...state, films: action.payload.data };
         }
-        case Types.GET_FILM_FULFILLED: {
+        case "GET_FILM_FULFILLED": {
             return { ...state, film: action.payload.data };
         }
-        case Types.RESET_FILM: {
+        case "RESET_FILM": {
             return { ...state, film: null };
         }
-        case Types.GET_FILM_ROLES_FULFILLED: {
+        case "GET_FILM_ROLES_FULFILLED": {
             return { ...state, film: { ...state.film, film_roles: action.payload.data } };
         }
     }
