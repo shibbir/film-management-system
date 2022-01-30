@@ -7,10 +7,10 @@ async function init() {
         await sequelize.dbConnector.query("DROP SCHEMA fm CASCADE");
         await sequelize.dbConnector.query("CREATE SCHEMA IF NOT EXISTS fm");
 
-        const { create_film_persons_table, get_film_persons, insert_or_update_film_person, delete_film_person } = require("./src/film-person/film-person.pgplsql");
-        const { create_films_table, get_films, insert_or_update_film, delete_film } = require("./src/film/film.pgplsql");
-        const { create_film_roles_table, get_film_roles } = require("./src/film/film-role.pgplsql");
-        const { create_users_table, create_film_ratings_table, insert_user, get_film_ratings, insert_or_update_film_rating, delete_film_rating } = require("./src/film-rating/film-rating.pgplsql");
+        const { create_film_persons_table, get_film_persons, insert_or_update_film_person, delete_film_person } = require("./src/film-person/film-person.plpgsql");
+        const { create_films_table, get_films, insert_or_update_film, delete_film } = require("./src/film/film.plpgsql");
+        const { create_film_roles_table, get_film_roles } = require("./src/film/film-role.plpgsql");
+        const { create_users_table, create_film_ratings_table, insert_user, get_film_ratings, insert_or_update_film_rating, delete_film_rating } = require("./src/film-rating/film-rating.plpgsql");
 
         await sequelize.dbConnector.query(create_film_persons_table);
         await sequelize.dbConnector.query(get_film_persons);
