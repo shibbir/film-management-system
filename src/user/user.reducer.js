@@ -1,7 +1,8 @@
 const initialState = {
     user: null,
     film_ratings: [],
-    film_rating: null
+    film_rating: null,
+    film_suggestions: []
 };
 
 export default function reducer(state=initialState, action) {
@@ -17,6 +18,9 @@ export default function reducer(state=initialState, action) {
         }
         case "POST_USER_FULFILLED": {
             return { ...state, user: action.payload.data };
+        }
+        case "GET_FILM_SUGGESTIONS_FULFILLED": {
+            return { ...state, film_suggestions: action.payload.data };
         }
     }
     return state;

@@ -106,7 +106,28 @@ export default function Dashboard() {
                                 <Feed.Label icon="hand point right outline"/>
                                 <Feed.Content>
                                     <Feed.Summary>
-                                        Create, modify, remove, archive subjects. Assign teacher per subject.
+                                        Create, modify, remove film ratings for the selected user.
+                                    </Feed.Summary>
+                                </Feed.Content>
+                            </Feed.Event>
+                        </Feed>
+                    </Card.Content>
+                </Link>
+
+                <Link className="ui raised card" to="/film-suggestions">
+                    <Label color="blue" corner="right" size="small">
+                        <Icon name="bookmark"/>
+                    </Label>
+                    <Card.Content extra>
+                        <Card.Header>Film Watch Suggestions</Card.Header>
+                    </Card.Content>
+                    <Card.Content>
+                        <Feed>
+                            <Feed.Event>
+                                <Feed.Label icon="hand point right outline"/>
+                                <Feed.Content>
+                                    <Feed.Summary>
+                                        Find the next film to watch. Watch suggestions are based on film rating and genres.
                                     </Feed.Summary>
                                 </Feed.Content>
                             </Feed.Event>

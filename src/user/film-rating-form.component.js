@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { DropdownInput } from "../core/components/field-inputs.component";
 import { getFilms } from "../film/film.actions";
-import { createFilmRating, updateFilmRating, getFilmRating, resetFilmRating, getFilmRatings } from "./film-rating.actions";
+import { createFilmRating, updateFilmRating, getFilmRating, resetFilmRating, getFilmRatings } from "./user.actions";
 
 function FilmRatingForm({ filmRatingId } = props) {
     const dispatch = useDispatch();

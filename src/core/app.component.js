@@ -12,7 +12,7 @@ import Dashboard from "./components/dashboard.component";
 
 import FilmPersonRoutes from "../film-person/film-person.routes";
 import FilmRoutes from "../film/film.routes";
-import FilmRatingRoutes from "../film-rating/film-rating.routes";
+import UserRoutes from "../user/user.routes";
 
 let refCount = 0;
 
@@ -50,7 +50,7 @@ export default function App() {
 
             <Route path="/film-persons" component={FilmPersonRoutes}/>
             <Route path="/films" component={FilmRoutes}/>
-            <Route path="/film-ratings" component={FilmRatingRoutes}/>
+            <Route component={UserRoutes}/>
 
             <Route component={NoMatch}/>
         </Switch>

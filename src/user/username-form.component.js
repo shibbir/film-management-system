@@ -5,7 +5,7 @@ import { Divider, Button } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 
 import { TextInput } from "../core/components/field-inputs.component";
-import { createUser } from "./film-rating.actions";
+import { createUser } from "./user.actions";
 
 function UsernameForm() {
     const dispatch = useDispatch();

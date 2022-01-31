@@ -10,6 +10,16 @@ export function getFilmRatings(user_id) {
     };
 }
 
+export function getFilmSuggestions(user_id) {
+    return {
+        type: "GET_FILM_SUGGESTIONS",
+        payload: axios({
+            method: "get",
+            url: `/api/users/${user_id}/film-suggestions`
+        })
+    };
+}
+
 export function createUser(data) {
     return {
         type: "POST_USER",

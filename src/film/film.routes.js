@@ -4,7 +4,7 @@ import { Switch, useRouteMatch } from "react-router-dom";
 import Films from "./films.component";
 import PrivateRoute from "../core/components/route-container.component";
 
-export default function ClassRoutes() {
+export default function FilmRoutes() {
     const { path } = useRouteMatch();
 
     return (

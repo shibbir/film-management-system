@@ -91,4 +91,17 @@ module.exports = function(app) {
             }
         })
     ;
+
+    app.route("/api/users/:id/film-suggestions").get(async function(req, res) {
+        try {
+            const data = await sequelize.dbConnector.query("SELECT * FROM fm.get_film_watch_suggestions(:user_id)", {
+                replacements: { user_id: +req.params.id },
+                type: QueryTypes.SELECT
+            });
+
+            res.json(data);
+        } catch(err) {
+            res.status(500).send(err.message);
+        }
+    });
 };

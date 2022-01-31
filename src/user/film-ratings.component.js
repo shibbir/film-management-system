@@ -7,14 +7,14 @@ import { Icon, Divider, Segment, Button, Table, Modal, Header, Dropdown, Breadcr
 
 import UsernameForm from "./username-form.component";
 import FilmRatingForm from "./film-rating-form.component";
-import { deleteFilmRating, getFilmRatings } from "./film-rating.actions";
+import { deleteFilmRating, getFilmRatings } from "./user.actions";
 
 export default function FilmRatings() {
     const dispatch = useDispatch();
     const [filmRatingId, setFilmRatingId] = useState(undefined);
 
-    const user = useSelector(state => state.filmRatingReducer.user);
-    const film_ratings = useSelector(state => state.filmRatingReducer.film_ratings);
+    const user = useSelector(state => state.userReducer.user);
+    const film_ratings = useSelector(state => state.userReducer.film_ratings);
 
     useEffect(() => {
         if(user && user.id) {

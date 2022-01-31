@@ -160,9 +160,31 @@ const delete_film_rating = `
     END; $$;
 `;
 
+const get_film_watch_suggestions = `
+    CREATE OR REPLACE FUNCTION fm.get_film_watch_suggestions(p_user_id INT)
+    RETURNS SETOF fm.films
+    LANGUAGE plpgsql
+
+    AS $$
+
+    DECLARE
+        d_genres VARCHAR[];
+
+    BEGIN
+        SELECT t1.genres INTO d_genres
+        FROM fm.films t1
+        JOIN fm.film_ratings t2 ON t2.film_id = t1.id
+        WHERE t2.user_id = p_user_id AND t2.rating > 5;
+
+        RETURN QUERY SELECT * FROM fm.films WHERE genres IN(d_genres);
+
+    END; $$;
+`;
+
 exports.create_users_table = create_users_table;
 exports.insert_user = insert_user;
 exports.create_film_ratings_table = create_film_ratings_table;
 exports.get_film_ratings = get_film_ratings;
 exports.insert_or_update_film_rating = insert_or_update_film_rating;
 exports.delete_film_rating = delete_film_rating;
+exports.get_film_watch_suggestions = get_film_watch_suggestions;
