@@ -13,6 +13,28 @@ const create_films_table = `
     )
 `;
 
+const seed_films = `
+    CREATE OR REPLACE FUNCTION fm.seed_films()
+    RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+
+    BEGIN
+        INSERT INTO fm.films (title, release_year, genres, production_country, subordinated_to)
+        VALUES
+            ('The Terminator', 1984, '{"Action", "Sci-Fi"}', 'United States', null),
+            ('Terminator 2: Judgment Day', 1991, '{"Action", "Sci-Fi"}', 'United States', 1),
+            ('Terminator 3: Rise of the Machines', 2003, '{"Action", "Sci-Fi"}', 'United States', 1),
+            ('Terminator: Dark Fate', 2019, '{"Action", "Sci-Fi"}', 'United States', 1),
+            ('Good Will Hunting', 1997, '{"Narrative", "Drama", "Romance"}', 'United States', null),
+            ('The Godfather', 1972, '{"Action", "Crime", "Drama"}', 'United States', null),
+            ('The Godfather: Part II', 1974, '{"Action", "Crime", "Thriller"}', 'United States', null),
+            ('Inception', 2010, '{"Action", "Adventure", "Sci-Fi"}', 'United States', null),
+            ('Interstellar', 2014, '{"Adventure", "Drama", "Sci-Fi"}', 'United States', null),
+            ('The Departed', 2006, '{"Crime", "Drama", "Thriller"}', 'United States', null);
+    END; $$;
+`;
+
 const get_films = `
     CREATE OR REPLACE FUNCTION fm.get_films(
         p_id INT DEFAULT NULL
@@ -157,6 +179,7 @@ const delete_film = `
 `;
 
 exports.create_films_table = create_films_table;
+exports.seed_films = seed_films;
 exports.get_films = get_films;
 exports.insert_or_update_film = insert_or_update_film;
 exports.delete_film = delete_film;

@@ -22,6 +22,63 @@ const create_film_ratings_table = `
     )
 `;
 
+const seed_users = `
+    CREATE OR REPLACE FUNCTION fm.seed_users()
+    RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+
+    BEGIN
+        INSERT INTO fm.users(username)
+        VALUES
+            ('user1'),
+            ('user2'),
+            ('user3'),
+            ('user4'),
+            ('user5');
+    END; $$;
+`;
+
+const seed_film_ratings = `
+    CREATE OR REPLACE FUNCTION fm.seed_film_ratings()
+    RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+
+    BEGIN
+        INSERT INTO fm.film_ratings (user_id, film_id, rating)
+        VALUES
+            (1, 1, 7),
+            (1, 2, 8),
+            (1, 3, 7.5),
+            (1, 4, 9.2),
+            (1, 5, 7.5),
+            (1, 6, 8),
+            (1, 7, 9),
+            (1, 8, 6),
+            (1, 9, 9.5),
+            (1, 10, 7.5),
+
+            (2, 1, 7),
+            (2, 2, 8),
+            (2, 3, 7.5),
+            (2, 4, 9.2),
+            (2, 5, 7.5),
+
+            (3, 6, 7),
+            (3, 7, 8),
+            (3, 8, 7.5),
+            (3, 9, 9.2),
+            (3, 10, 7.5),
+
+            (4, 1, 7),
+            (4, 3, 8),
+            (4, 5, 7.5),
+            (4, 7, 9.2),
+            (4, 9, 7.5);
+    END; $$;
+`;
+
 const get_film_ratings = `
     CREATE OR REPLACE FUNCTION fm.get_film_ratings(
         p_user_id INT,
@@ -182,8 +239,10 @@ const get_film_watch_suggestions = `
 `;
 
 exports.create_users_table = create_users_table;
-exports.insert_user = insert_user;
 exports.create_film_ratings_table = create_film_ratings_table;
+exports.seed_users = seed_users;
+exports.seed_film_ratings = seed_film_ratings;
+exports.insert_user = insert_user;
 exports.get_film_ratings = get_film_ratings;
 exports.insert_or_update_film_rating = insert_or_update_film_rating;
 exports.delete_film_rating = delete_film_rating;

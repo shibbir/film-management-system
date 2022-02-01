@@ -7,6 +7,28 @@ const create_film_persons_table = `
     )
 `;
 
+const seed_film_persons = `
+    CREATE OR REPLACE FUNCTION fm.seed_film_persons()
+    RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+
+    BEGIN
+        INSERT INTO fm.film_persons (name, date_of_birth, sex)
+        VALUES
+            ('James Cameron', '1954-8-16', 'Male'),
+            ('Arnold Schwarzenegger', '1947-7-30', 'Male'),
+            ('Linda Hamilton', '1956-9-26', 'Female'),
+            ('Marlon Brando', '1924-4-3', 'Male'),
+            ('Al Pacino', '1940-4-25', 'Male'),
+            ('Christopher Nolan', '1970-7-30', 'Male'),
+            ('Leonardo DiCaprio', '1974-11-11', 'Male'),
+            ('Matt Damon', '1970-10-8', 'Male'),
+            ('Francis Ford Coppola', '1939-4-7', 'Male'),
+            ('Mario Puzo', '1920-10-15', 'Male');
+    END; $$;
+`;
+
 const get_film_persons = `
     CREATE OR REPLACE FUNCTION fm.get_film_persons(
         p_id INT DEFAULT NULL
@@ -91,6 +113,7 @@ const delete_film_person = `
 `;
 
 exports.get_film_persons = get_film_persons;
+exports.seed_film_persons = seed_film_persons;
 exports.create_film_persons_table = create_film_persons_table;
 exports.insert_or_update_film_person = insert_or_update_film_person;
 exports.delete_film_person = delete_film_person;
