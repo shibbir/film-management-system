@@ -10,7 +10,7 @@ import { createFilmRating, updateFilmRating, getFilmRating, resetFilmRating, get
 
 function FilmRatingForm({ filmRatingId } = props) {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.filmRatingReducer.user);
+    const user = useSelector(state => state.userReducer.user);
 
     useEffect(() => {
         if(user && user.id && filmRatingId) {
@@ -22,7 +22,7 @@ function FilmRatingForm({ filmRatingId } = props) {
     }, [user, filmRatingId]);
 
     const films = useSelector(state => state.filmReducer.films);
-    const film_rating = useSelector(state => state.filmRatingReducer.film_rating);
+    const film_rating = useSelector(state => state.userReducer.film_rating);
 
     const film_options = films.map(function(option) {
         return { key: option.id, value: option.id, text: `${option.title} [${option.release_year}]` };

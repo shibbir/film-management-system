@@ -4,7 +4,7 @@
 ## Development Environment Setup
 - [Install Node.js >= 14.5](https://nodejs.org/en/)
 - [Install PostgreSQL >= 12.0](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
-- After installing PostgreSQL, create a database named `school_management_system`
+- After installing PostgreSQL, create a database named `film_manager`
 
 ## Configuring Environment Variables
 > By default, this project comes with a pre-configured .env file. Feel free to adjust the values if needed. Details of each environment variables are below:
