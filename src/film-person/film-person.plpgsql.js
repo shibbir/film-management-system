@@ -1,10 +1,16 @@
 const create_film_persons_table = `
-    CREATE TABLE IF NOT EXISTS fm.film_persons(
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(50) NOT NULL UNIQUE,
-        date_of_birth DATE,
-        sex VARCHAR(10)
-    )
+    CREATE OR REPLACE FUNCTION fm.create_film_persons_table()
+    RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+    BEGIN
+        CREATE TABLE IF NOT EXISTS fm.film_persons(
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(50) NOT NULL UNIQUE,
+            date_of_birth DATE,
+            sex VARCHAR(10)
+        );
+    END; $$;
 `;
 
 const seed_film_persons = `

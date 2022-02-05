@@ -42,36 +42,44 @@ async function init() {
         } = require("./src/user/user.plpgsql");
 
         await sequelize.dbConnector.query(create_film_persons_table);
-        await sequelize.dbConnector.query(seed_film_persons);
-        await sequelize.dbConnector.query(get_film_persons);
-        await sequelize.dbConnector.query(insert_or_update_film_person);
-        await sequelize.dbConnector.query(delete_film_person);
-
         await sequelize.dbConnector.query(create_films_table);
-        await sequelize.dbConnector.query(seed_films);
-        await sequelize.dbConnector.query(get_films);
-        await sequelize.dbConnector.query(insert_or_update_film);
-        await sequelize.dbConnector.query(delete_film);
-
         await sequelize.dbConnector.query(create_film_roles_table);
-        await sequelize.dbConnector.query(seed_film_roles);
-        await sequelize.dbConnector.query(get_film_roles);
-
         await sequelize.dbConnector.query(create_users_table);
         await sequelize.dbConnector.query(create_film_ratings_table);
+
+        await sequelize.dbConnector.query("SELECT fm.create_film_persons_table()");
+        await sequelize.dbConnector.query("SELECT fm.create_films_table()");
+        await sequelize.dbConnector.query("SELECT fm.create_film_roles_table()");
+        await sequelize.dbConnector.query("SELECT fm.create_users_table()");
+        await sequelize.dbConnector.query("SELECT fm.create_film_ratings_table()");
+
+        await sequelize.dbConnector.query(seed_film_persons);
+        await sequelize.dbConnector.query(seed_films);
+        await sequelize.dbConnector.query(seed_film_roles);
         await sequelize.dbConnector.query(seed_users);
         await sequelize.dbConnector.query(seed_film_ratings);
-        await sequelize.dbConnector.query(insert_user);
-        await sequelize.dbConnector.query(get_film_ratings);
-        await sequelize.dbConnector.query(insert_or_update_film_rating);
-        await sequelize.dbConnector.query(delete_film_rating);
-        await sequelize.dbConnector.query(get_film_watch_suggestions);
 
         await sequelize.dbConnector.query("SELECT fm.seed_film_persons()");
         await sequelize.dbConnector.query("SELECT fm.seed_films()");
         await sequelize.dbConnector.query("SELECT fm.seed_film_roles()");
         await sequelize.dbConnector.query("SELECT fm.seed_users()");
         await sequelize.dbConnector.query("SELECT fm.seed_film_ratings()");
+
+        await sequelize.dbConnector.query(get_film_persons);
+        await sequelize.dbConnector.query(insert_or_update_film_person);
+        await sequelize.dbConnector.query(delete_film_person);
+
+        await sequelize.dbConnector.query(get_films);
+        await sequelize.dbConnector.query(insert_or_update_film);
+        await sequelize.dbConnector.query(delete_film);
+
+        await sequelize.dbConnector.query(get_film_roles);
+
+        await sequelize.dbConnector.query(insert_user);
+        await sequelize.dbConnector.query(get_film_ratings);
+        await sequelize.dbConnector.query(insert_or_update_film_rating);
+        await sequelize.dbConnector.query(delete_film_rating);
+        await sequelize.dbConnector.query(get_film_watch_suggestions);
     } catch(err) {
         console.error(err);
     }

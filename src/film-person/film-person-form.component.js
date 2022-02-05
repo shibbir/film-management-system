@@ -4,7 +4,7 @@ import iziToast from "izitoast/dist/js/iziToast";
 import { Divider, Button } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { TextInput } from "../core/components/field-inputs.component";
+import { TextInput, DropdownInput } from "../core/components/field-inputs.component";
 import { createFilmPerson, updateFilmPerson, getFilmPerson, resetFilmPerson, getFilmPersons } from "./film-person.actions";
 
 function FilmPersonForm({ id } = props) {
@@ -19,6 +19,11 @@ function FilmPersonForm({ id } = props) {
     }, [id]);
 
     const film_person = useSelector(state => state.filmPersonReducer.film_person);
+
+    const sex_options = [
+        { key: 1, value: "Male", text: "Male" },
+        { key: 2, value: "Female", text: "Female" }
+    ];
 
     return (
         <Formik
@@ -85,10 +90,12 @@ function FilmPersonForm({ id } = props) {
                         label: "Date of Birth"
                     }}/>
 
-                    <TextInput attributes={{
-                        type: "text",
+                    <DropdownInput attributes={{
+                        value: formikProps.values.sex,
                         name: "sex",
-                        label: "Sex"
+                        label: "Sex",
+                        options: sex_options,
+                        onChange: (event, data) => {formikProps.setFieldValue(data.name, data.value)}
                     }}/>
 
                     <Divider hidden/>
