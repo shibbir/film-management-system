@@ -49,6 +49,7 @@ export default function FilmRatings() {
                 <Table.Cell>{index+1}</Table.Cell>
                 <Table.Cell>{row.title}</Table.Cell>
                 <Table.Cell>{row.release_year}</Table.Cell>
+                <Table.Cell>{row.genres.join(', ')}</Table.Cell>
                 <Table.Cell>
                     <StarRatings
                         rating={+row.rating}
@@ -96,6 +97,7 @@ export default function FilmRatings() {
                             <Table.HeaderCell>#</Table.HeaderCell>
                             <Table.HeaderCell>Film Title</Table.HeaderCell>
                             <Table.HeaderCell>Release Year</Table.HeaderCell>
+                            <Table.HeaderCell>Genres</Table.HeaderCell>
                             <Table.HeaderCell>Rating</Table.HeaderCell>
                             <Table.HeaderCell>Rated By</Table.HeaderCell>
                             <Table.HeaderCell>Actions</Table.HeaderCell>
