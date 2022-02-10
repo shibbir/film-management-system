@@ -22,7 +22,7 @@ POSTGRES_DATABASE | Yes | `film_manager` | PostgreSQL database name
 # To install the npm packages
 $ npm install
 
-# To drop and re-create the schema, tables, functions
+# To drop and re-create the schema, tables, and PL/pgSQL functions
 $ npm run seed
 
 # To start the development build with the watch mode
